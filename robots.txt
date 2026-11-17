@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://vibecoder-bulavin.github.io/bonjour-club/sitemap.xml
