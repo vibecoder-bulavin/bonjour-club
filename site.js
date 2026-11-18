@@ -213,4 +213,75 @@
     });
     show();
   }
+
+  // Самопроверка: считаем отмеченное и показываем подходящий вывод
+  function pick(list, n) {
+    var best = null;
+    list.forEach(function (r) { if (+r.dataset.min <= n && (!best || +r.dataset.min > +best.dataset.min)) best = r; });
+    list.forEach(function (r) { r.hidden = r !== best; });
+  }
+  [].forEach.call(document.querySelectorAll('[data-selfcheck]'), function (box) {
+    var count = box.querySelector('[data-count]'), res = [].slice.call(box.querySelectorAll('.sc-res')),
+        empty = box.querySelector('.sc-empty'), btn = box.querySelector('.sc-btn');
+    box.addEventListener('click', function (e) {
+      var b = e.target.closest('.chk'); if (!b) return;
+      b.setAttribute('aria-pressed', b.getAttribute('aria-pressed') === 'true' ? 'false' : 'true');
+      var n = box.querySelectorAll('.chk[aria-pressed="true"]').length;
+      count.textContent = n;
+      if (n) pick(res, n); else res.forEach(function (r) { r.hidden = true; });
+      if (empty) empty.hidden = n > 0;
+      if (btn) btn.hidden = n === 0;
+      box.classList.toggle('has', n > 0);
+      if (n === 1) track('selfcheck');
+    });
+  });
+  // Мини-урок: ответ сразу с объяснением
+  [].forEach.call(document.querySelectorAll('[data-trylesson]'), function (box) {
+    var qs = box.querySelectorAll('.tl-q'), done = 0, score = 0;
+    box.addEventListener('click', function (e) {
+      var b = e.target.closest('.tl-opt'); if (!b) return;
+      var q = b.closest('.tl-q'); if (q.classList.contains('done')) return;
+      q.classList.add('done'); done++;
+      var ok = b.dataset.ok === '1'; if (ok) score++;
+      b.classList.add(ok ? 'right' : 'wrong');
+      [].forEach.call(q.querySelectorAll('.tl-opt'), function (o) { if (o.dataset.ok === '1') o.classList.add('right'); o.disabled = true; });
+      var why = q.querySelector('.tl-why'); why.textContent = (ok ? '✓ ' : '✗ ') + b.dataset.why; why.hidden = false;
+      if (done === 1) track('trylesson');
+      if (done === qs.length) { var f = box.querySelector('.tl-final'); f.querySelector('[data-score]').textContent = score; pick([].slice.call(f.querySelectorAll('.tl-res')), score); f.hidden = false; f.scrollIntoView({behavior: 'smooth', block: 'center'}); }
+    });
+  });
+  // Плавное появление блоков (включается "animate": true в site.json)
+  if (document.body.classList.contains('anim') && 'IntersectionObserver' in window &&
+      !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    var sel = 'main section .wrap > *, .sc-list > li, .compare > *, .route > li, .steps > li, .tl-q, .fb-list > li, .plan li, .faq details, .gallery img';
+    var els = [].slice.call(document.querySelectorAll(sel));
+    var io = new IntersectionObserver(function (es) {
+      es.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
+    }, {rootMargin: '0px 0px -8% 0px', threshold: 0.08});
+    els.forEach(function (el) {
+      var sib = el.parentElement ? [].indexOf.call(el.parentElement.children, el) : 0;
+      el.style.setProperty('--d', Math.min(sib, 6) * 70 + 'ms');
+      el.classList.add('rv');
+      io.observe(el);
+    });
+  }
+  // Галерея-лента: счётчик и лёгкий «толчок», чтобы было видно, что листается
+  [].forEach.call(document.querySelectorAll('[data-gallery]'), function (box) {
+    var g = box.querySelector('.gallery'), cnt = box.querySelector('[data-gi]'), imgs = g.querySelectorAll('img');
+    g.addEventListener('scroll', function () {
+      var w = imgs[0] ? imgs[0].getBoundingClientRect().width + 12 : 1;
+      cnt.textContent = Math.min(imgs.length, Math.round(g.scrollLeft / w) + 1);
+      box.classList.add('moved');
+    }, {passive: true});
+    if (!('IntersectionObserver' in window) || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    var io = new IntersectionObserver(function (es) {
+      if (!es[0].isIntersecting || g.scrollWidth <= g.clientWidth) return;
+      io.disconnect();
+      setTimeout(function () {
+        g.scrollTo({left: 90, behavior: 'smooth'});
+        setTimeout(function () { g.scrollTo({left: 0, behavior: 'smooth'}); box.classList.remove('moved'); }, 650);
+      }, 500);
+    }, {threshold: 0.6});
+    io.observe(g);
+  });
 })();

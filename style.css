@@ -360,79 +360,245 @@ body:has(.hero-full) .top nav a:hover{color:#fff}
   .amen li::before{left:13px;top:20px}
 }
 
-/* ---------- pop: Français avec Vlada (Bonjour Club). Только палитра брендбука. ---------- */
-.p-pop{--sky:#d0e6fd;--blush:#fbeae7;--coral:#fcab4f;--lemon:#fff184}
+/* ---------- интерактивные блоки: selfcheck, compare, progress (маршрут), trylesson, freebie ---------- */
+.sc-hint{display:inline-flex;align-items:center;gap:8px;margin:8px 0 0;font-weight:700;color:var(--ink)}
+.sc-hint::after{content:"↓";animation:scnudge 1.2s ease-in-out infinite}
+@keyframes scnudge{50%{transform:translateY(4px)}}
+.sc-list{list-style:none;margin:16px 0 0;padding:0;display:grid;gap:10px}
+.chk{all:unset;box-sizing:border-box;cursor:pointer;display:flex;gap:14px;align-items:center;width:100%;padding:16px 18px;border:1px solid var(--line);border-radius:var(--rimg);font-size:1.02rem;line-height:1.4;transition:transform .15s,background .15s,box-shadow .15s}
+.chk:hover{transform:translateY(-2px)}
+.chk:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.chk .box{flex:none;width:26px;height:26px;border-radius:7px;box-shadow:inset 0 0 0 2px var(--ink);display:grid;place-items:center}
+.chk[aria-pressed="true"]{background:var(--surface)}
+.chk[aria-pressed="true"] .box{background:var(--accent);box-shadow:none}
+.chk[aria-pressed="true"] .box::after{content:"✓";color:var(--accent-ink);font-size:.9rem;font-weight:700}
+.selfcheck:not(.has) .sc-list li:first-child .chk .box{animation:scpulse 1.6s ease-out infinite}
+@keyframes scpulse{0%{box-shadow:inset 0 0 0 2px var(--ink),0 0 0 0 rgba(6,22,133,.35)}100%{box-shadow:inset 0 0 0 2px var(--ink),0 0 0 12px rgba(6,22,133,0)}}
+.sc-out{margin-top:16px}
+.sc-count{font-family:var(--head);font-size:1.1rem;margin:0 0 8px;color:var(--muted)}
+.sc-count b{font-size:1.8rem;color:var(--ink)}
+.sc-empty{margin:0;color:var(--muted)}
+.sc-res{font-size:1.1rem;font-weight:600;margin:0 0 16px}
+.compare{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:24px}
+.cmp-panel{padding:24px;border-radius:var(--rimg);border:1px solid var(--line)}
+.cmp-label{font-size:.82rem;letter-spacing:.06em;text-transform:uppercase;font-weight:700;margin:0 0 6px}
+.cmp-panel h3{margin:0 0 14px}
+.cmp-panel ul{margin:0;padding-left:20px;display:grid;gap:8px}
+.route{list-style:none;margin:24px 0 0;padding:0;display:grid;gap:0;counter-reset:none}
+.route>li{position:relative;display:grid;grid-template-columns:48px 1fr;gap:16px;padding-bottom:22px}
+.route>li:not(:last-child)::before{content:"";position:absolute;left:23px;top:48px;bottom:0;width:2px;background:var(--line)}
+.rt-n{display:grid;place-items:center;width:48px;height:48px;border-radius:50%;background:var(--accent);color:var(--accent-ink);font-family:var(--head);font-weight:var(--hw);font-size:1.2rem}
+.route h3{margin:10px 0 10px}
+.rt-chips{list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;gap:8px}
+.rt-chips li{padding:8px 12px;border-radius:999px;border:1px solid var(--line);font-size:.93rem;line-height:1.3}
+.trylesson{display:grid;gap:14px;margin-top:24px}
+.tl-q{padding:22px;border-radius:var(--rimg);border:1px solid var(--line)}
+.tl-n{font-size:.85rem;color:var(--muted);margin:0 0 4px}
+.tl-q h3{margin:0 0 14px;font-size:1.1rem}
+.tl-opts{display:flex;flex-wrap:wrap;gap:10px}
+.tl-opt{all:unset;cursor:pointer;padding:12px 20px;border-radius:999px;box-shadow:inset 0 0 0 2px var(--ink);font-weight:700}
+.tl-opt:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.tl-opt:disabled{cursor:default;opacity:.55}
+.tl-opt.right{background:#d9f2df;box-shadow:inset 0 0 0 2px #1f7a3a;opacity:1}
+.tl-opt.wrong{background:#fde2e2;box-shadow:inset 0 0 0 2px #b42318;opacity:1}
+.tl-why{margin:14px 0 0;font-size:.97rem}
+.tl-final{padding:24px;border-radius:var(--rimg);background:var(--surface)}
+.tl-score{font-family:var(--head);font-size:1.1rem;margin:0 0 8px}
+.tl-score b{font-size:2rem}
+.tl-res{font-size:1.15rem;font-weight:600}
+.tl-link,.fb-link{font-weight:600;color:var(--ink)}
+.actions{display:flex;flex-wrap:wrap;gap:12px 20px;align-items:center}
+.freebie{display:grid;grid-template-columns:1fr 1fr;gap:clamp(20px,4vw,56px);align-items:center;padding:clamp(20px,4vw,48px);border-radius:var(--rimg);background:var(--surface)}
+.fb-img{width:100%;height:auto;display:block}
+.fb-tag{display:inline-block;margin:0 0 14px;padding:6px 14px;border-radius:999px;background:var(--accent);color:var(--accent-ink);font-weight:700}
+.fb-list{list-style:none;margin:16px 0 20px;padding:0;display:grid;gap:8px}
+.fb-list li{position:relative;padding-left:30px}
+.fb-list li::before{content:"✓";position:absolute;left:0;font-weight:700}
+.fb-price{font-family:var(--head);font-weight:var(--hw);font-size:2.4rem;margin:0 0 16px}
+.fb-note{margin:14px 0 0;font-size:.93rem}
+@media (max-width:820px){.compare,.freebie{grid-template-columns:1fr}}
+
+/* ---------- pop: Français avec Vlada (Bonjour Club). Стиль рабочей тетради: белая страница, цвет в плашках, кружках и панелях. ---------- */
+.p-pop{--sky:#d0e6fd;--blush:#fbeae7;--coral:#fcab4f;--lemon:#fff184;--sky-pale:color-mix(in srgb,#d0e6fd 45%,#fff);--blush-pale:color-mix(in srgb,#fbeae7 70%,#fff);--lemon-pale:color-mix(in srgb,#fff184 40%,#fff)}
 .p-pop main>section:not(.hero){border-top:0}
-.p-pop .top{border-bottom:2px solid var(--sky)}
-.p-pop .logo{font-family:var(--head);font-weight:900}
-.p-pop .kicker{display:inline-block;background:var(--lemon);color:var(--ink);padding:7px 14px;border-radius:999px;font-weight:600;letter-spacing:.06em}
-.p-pop h2{position:relative;padding-bottom:.32em}
-.p-pop h2::after{content:"";position:absolute;left:0;bottom:0;width:56px;height:8px;border-radius:999px;background:var(--coral)}
-.p-pop .btn{background:var(--coral);color:var(--ink);box-shadow:inset 0 0 0 2px var(--ink);font-weight:700}
-.p-pop .btn.ghost{background:var(--coral);color:var(--ink)}
-.p-pop .btn:hover{filter:none;background:var(--lemon)}
-/* hero: голубая плашка */
-.p-pop .hero{background:var(--sky)}
-.p-pop .hero-split img{aspect-ratio:595/842;object-fit:cover;border:6px solid #fff;box-shadow:0 0 0 2px var(--ink)}
-.p-pop .hero .note{display:inline-block;margin-top:14px;background:#fff;padding:8px 14px;border-radius:999px;font-weight:500}
-/* боли: розовые карточки */
-.p-pop #pain{background:var(--blush)}
-.p-pop .pain{display:grid;gap:12px}
-.p-pop .pain li,.p-pop .pain li:last-child{background:#fff;border:0;border-radius:20px;padding:18px 18px 18px 52px;font-weight:500}
-.p-pop .pain li::before{left:18px;top:21px;width:20px;height:20px;border-radius:50%;background:var(--coral);box-shadow:inset 0 0 0 2px var(--ink)}
-/* шаги и модули: карточки с номером */
+.p-pop .top{border-bottom:0}
+.p-pop .logo{font-family:var(--head);font-weight:900;display:flex;align-items:center;gap:10px}
+.p-pop .logo::before{content:"F";display:grid;place-items:center;width:34px;height:34px;border-radius:10px;background:var(--lemon);font-family:var(--head);font-weight:900;transform:rotate(-6deg)}
+/* лимонная плашка-метка, как «01.2 • LES SALUTATIONS» */
+.p-pop .kicker{display:inline-block;background:var(--lemon);color:var(--ink);padding:6px 14px;border-radius:999px;font-family:var(--head);font-weight:900;letter-spacing:.04em;font-size:.85rem}
+/* заголовки на голубой таблетке + жёлтые штрихи */
+.p-pop h1,.p-pop main h2{position:relative;display:table;background:var(--sky);padding:.12em .42em .16em;border-radius:.6em;margin-left:-.1em}
+.p-pop h1::after,.p-pop main h2::after{content:"";position:absolute;right:-30px;top:-22px;width:40px;height:40px;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Cg stroke='%23ffe34d' stroke-width='5' stroke-linecap='round'%3E%3Cpath d='M8 30 L4 38'/%3E%3Cpath d='M18 22 L30 10'/%3E%3Cpath d='M24 32 L36 28'/%3E%3C/g%3E%3C/svg%3E") no-repeat center/contain}
+.p-pop .two>div:first-child h2{margin-right:30px}
+/* кнопки: синяя основная, как монограмма */
+.p-pop .btn{background:var(--ink);color:#fff;font-weight:700}
+.p-pop .btn.ghost{background:var(--ink);color:#fff;box-shadow:none}
+.p-pop .btn:hover{filter:none;background:#1a2ca0}
+/* первый экран */
+.p-pop .hero-split img{aspect-ratio:595/842;object-fit:cover;border:8px solid #fff;border-radius:22px;box-shadow:0 10px 30px rgba(6,22,133,.15);transform:rotate(2deg)}
+.p-pop .hero .note{display:inline-block;margin-top:16px;background:var(--blush);padding:8px 16px;border-radius:999px;font-weight:600;transform:rotate(-1.5deg)}
+/* боли: чек-лист с квадратиками, как в тетради */
+.p-pop .pain{display:grid;gap:10px}
+.p-pop .pain li,.p-pop .pain li:last-child{border:0;background:var(--blush-pale);border-radius:18px;padding:16px 18px 16px 52px;font-weight:500}
+.p-pop .pain li::before{left:18px;top:19px;width:18px;height:18px;border-radius:5px;background:#fff;box-shadow:inset 0 0 0 2px var(--ink)}
+/* модули: бледно-голубые панели, номер в лимонном кружке */
 .p-pop .steps{gap:14px}
-.p-pop .steps li{border:0;border-radius:24px;padding:22px 22px 24px;background:var(--sky)}
-.p-pop .steps li:nth-child(3n+2){background:var(--blush)}
-.p-pop .steps li:nth-child(3n){background:var(--lemon)}
-.p-pop .steps li::before{display:grid;place-items:center;width:44px;height:44px;border-radius:50%;background:var(--ink);color:#fff;font-size:1.25rem;margin-bottom:14px}
-.p-pop .steps h3{font-family:var(--head);font-weight:900;font-size:1.3rem;margin:0 0 6px}
+.p-pop .steps li{border:0;border-radius:26px;padding:22px 22px 24px;background:var(--sky-pale)}
+.p-pop .steps li::before{display:grid;place-items:center;width:42px;height:42px;border-radius:50%;background:var(--lemon);color:var(--ink);font-size:1.25rem;font-weight:900;margin-bottom:12px}
+.p-pop .steps h3{display:inline-block;font-family:var(--head);font-weight:900;font-size:1.3rem;margin:0 0 8px}
 .p-pop .steps p{color:var(--ink);margin:0}
-/* метод: компактная лесенка, как в зошите */
-.p-pop #metod{background:var(--sky)}
-.p-pop #metod .steps{grid-template-columns:1fr;max-width:760px;gap:10px}
-.p-pop #metod .steps li{display:grid;grid-template-columns:44px 1fr;column-gap:16px;align-items:center;background:#fff;padding:12px 18px 12px 12px;border-radius:999px}
-.p-pop #metod .steps li::before{grid-row:span 2;margin:0;background:var(--lemon);color:var(--ink);box-shadow:inset 0 0 0 2px var(--ink)}
+/* метод: розовые строки с лимонными номерами, как «Як побудоване навчання» */
+.p-pop #metod .steps{grid-template-columns:1fr;max-width:760px;gap:8px}
+.p-pop #metod .steps li{display:grid;grid-template-columns:40px 1fr;column-gap:14px;align-items:center;background:var(--blush-pale);padding:10px 18px 10px 10px;border-radius:999px}
+.p-pop #metod .steps li::before{grid-row:span 2;width:40px;height:40px;margin:0;font-size:1.1rem}
 .p-pop #metod .steps h3{font-size:1.1rem;margin:0}
 .p-pop #metod .steps p{font-size:.95rem}
-/* CTA: синяя полоса с точками */
-.p-pop .s-cta{background:var(--ink);color:#fff;position:relative;overflow:hidden}
-.p-pop .s-cta::after{content:"";position:absolute;right:24px;top:24px;width:120px;height:72px;background:radial-gradient(circle,var(--lemon) 4px,transparent 4.5px) 0 0/24px 24px}
-.p-pop .s-cta .cta{position:relative;z-index:1}
-.p-pop .s-cta h2{color:#fff}
-.p-pop .s-cta h2::after{background:var(--lemon)}
-.p-pop .s-cta p{color:#fff}
-.p-pop .s-cta .btn{background:var(--lemon);box-shadow:none}
-.p-pop .s-cta .btn:hover{background:var(--coral)}
-/* галерея: страницы целиком */
-.p-pop .gallery img,.p-pop .gallery img:first-child{grid-column:auto;grid-row:auto;aspect-ratio:595/842;border-radius:18px;box-shadow:0 0 0 2px var(--sky)}
-.p-pop .gallery{grid-auto-rows:auto}
+/* CTA: панель «Petit conseil» */
+.p-pop .s-cta .cta{background:var(--sky-pale);border-radius:32px;padding:clamp(24px,4vw,44px)}
+.p-pop .s-cta h2{background:#fff}
+/* галерея: страницы как наклеенные листы */
+.p-pop .gallery img,.p-pop .gallery img:first-child{grid-column:auto;grid-row:auto;aspect-ratio:595/842;border-radius:16px;border:6px solid #fff;box-shadow:0 6px 20px rgba(6,22,133,.12)}
+.p-pop .gallery{grid-auto-rows:auto;padding:6px 0 14px}
 /* цена */
-.p-pop #cina{background:var(--blush)}
 .p-pop .plans{max-width:560px}
-.p-pop .plan{background:#fff;border:3px solid var(--ink);border-radius:28px}
+.p-pop .plan{background:var(--sky-pale);border:0;border-radius:30px}
 .p-pop .plan h3{font-family:var(--head);font-weight:900;font-size:1.4rem;margin:0}
-.p-pop .plan-price{display:inline-block;align-self:flex-start;background:var(--lemon);padding:4px 18px;border-radius:999px;font-size:2.6rem}
-.p-pop .plan li{position:relative;padding:10px 0 10px 36px;border-top:1px solid var(--sky);font-size:1rem}
-.p-pop .plan li::before{content:"✓";position:absolute;left:0;top:10px;width:24px;height:24px;border-radius:50%;background:var(--sky);display:grid;place-items:center;font-size:.8rem;font-weight:700}
-/* автор */
-.p-pop .portrait{background:var(--blush);border:6px solid #fff;box-shadow:0 0 0 2px var(--ink)}
-.p-pop .sign{font-family:var(--head);font-weight:900;font-size:1.4rem}
-/* оффер: лимонная карточка */
-.p-pop .offer{background:var(--lemon);border-radius:32px;padding:clamp(24px,4vw,48px)}
-.p-pop .terms>div{border-top:0;background:#fff;border-radius:20px;padding:18px 20px}
-.p-pop .terms span{color:var(--ink)}
-.p-pop .terms p{font-family:var(--head);font-weight:900;font-size:1.25rem;line-height:1.25}
-/* FAQ: карточки */
+.p-pop .plan-price{display:inline-block;align-self:flex-start;background:var(--lemon);padding:2px 20px;border-radius:999px;font-size:2.6rem;transform:rotate(-2deg)}
+.p-pop .plan ul{display:grid;gap:8px}
+.p-pop .plan li{position:relative;padding:12px 14px 12px 48px;border:0;background:#fff;border-radius:16px;font-size:.98rem}
+.p-pop .plan li::before{content:"✓";position:absolute;left:12px;top:11px;width:26px;height:26px;border-radius:50%;background:var(--lemon);display:grid;place-items:center;font-size:.8rem;font-weight:900}
+/* автор: фото на розовом пятне, подпись */
+.p-pop .portrait{background:var(--blush);border-radius:40% 60% 46% 54%/55% 45% 55% 45%}
+.p-pop .sign{display:inline-block;font-family:var(--head);font-weight:900;font-size:1.4rem;background:var(--lemon);padding:2px 14px;border-radius:999px;transform:rotate(-3deg)}
+/* оффер: розовый купон, как «-20%» */
+.p-pop .offer{background:var(--blush-pale);border-radius:32px;padding:clamp(24px,4vw,48px)}
+.p-pop .offer h2{background:#fff}
+.p-pop .terms>div{border-top:0;background:#fff;border-radius:22px;padding:18px 20px}
+.p-pop .terms span{display:inline-block;background:var(--lemon);color:var(--ink);padding:3px 12px;border-radius:999px;font-family:var(--head);font-weight:900}
+.p-pop .terms p{font-family:var(--head);font-weight:900;font-size:1.2rem;line-height:1.25}
+/* FAQ: голубые карточки, «+» в лимонном кружке */
 .p-pop .faq{display:grid;gap:10px}
-.p-pop .faq details,.p-pop .faq details:last-child{border:0;background:var(--sky);border-radius:20px;padding:18px 20px}
-.p-pop .faq summary::after{content:"+";display:grid;place-items:center;flex:none;width:28px;height:28px;border-radius:50%;background:var(--lemon);color:var(--ink);font-weight:700}
-.p-pop .faq details[open]{background:var(--blush)}
+.p-pop .faq details,.p-pop .faq details:last-child{border:0;background:var(--sky-pale);border-radius:20px;padding:16px 20px}
+.p-pop .faq summary::after{content:"+";display:grid;place-items:center;flex:none;width:28px;height:28px;border-radius:50%;background:var(--lemon);color:var(--ink);font-weight:900}
 .p-pop .faq details[open] summary::after{content:"−"}
 .p-pop .faq details p{color:var(--ink)}
-.p-pop .foot{background:var(--sky)}
+.p-pop .foot{background:var(--sky-pale);border-radius:40px 40px 0 0}
+.p-pop .foot h2{background:#fff}
 @media (max-width:820px){
-  .p-pop .s-cta::after{width:72px;height:48px;right:16px;top:16px}
   .p-pop .gallery img,.p-pop .gallery img:first-child{aspect-ratio:595/842}
   .p-pop #metod .steps li{border-radius:24px}
+  .p-pop h1::after,.p-pop main h2::after{right:-12px;top:-26px;width:32px;height:32px}
+  .p-pop .hero-split img{transform:rotate(1.5deg);max-width:92%;margin:0 auto}
+  .p-pop h1{font-size:2.1rem}
+  .p-pop main h2{font-size:1.65rem}
 }
+
+/* pop: интерактив в стиле тетради */
+.p-pop .sc-hint{background:var(--lemon);padding:8px 16px;border-radius:999px;font-family:var(--head);font-weight:900}
+.p-pop .chk{border:0;background:var(--blush-pale);border-radius:18px;font-weight:500;box-shadow:0 0 0 2px transparent}
+.p-pop .chk:hover{box-shadow:0 0 0 2px var(--blush)}
+.p-pop .chk .box{background:#fff}
+.p-pop .chk[aria-pressed="true"]{background:var(--blush);box-shadow:0 0 0 2px var(--ink)}
+.p-pop .chk[aria-pressed="true"] .box{background:var(--ink)}
+.p-pop .chk[aria-pressed="true"] .box::after{color:#fff}
+.p-pop .sc-out{background:var(--sky-pale);border-radius:26px;padding:20px 22px}
+.p-pop .sc-count b{display:inline-grid;place-items:center;min-width:46px;height:46px;border-radius:50%;background:var(--lemon);font-size:1.5rem;margin-right:4px}
+.p-pop .sc-res{font-family:var(--head);font-weight:900;font-size:1.25rem;line-height:1.3}
+.p-pop .sc-empty{color:var(--ink)}
+.p-pop .cmp-panel{border:0;border-radius:28px}
+.p-pop .cmp-0{background:var(--blush-pale)}
+.p-pop .cmp-1{background:var(--ink);color:#fff}
+.p-pop .cmp-label{display:inline-block;padding:4px 12px;border-radius:999px;background:#fff;font-family:var(--head);font-weight:900;letter-spacing:.03em}
+.p-pop .cmp-1 .cmp-label{background:var(--lemon);color:var(--ink)}
+.p-pop .cmp-1 h3{color:#fff}
+.p-pop .cmp-panel h3,.p-pop .tl-q h3,.p-pop .route h3{font-family:var(--head);font-weight:900;font-size:1.3rem}
+.p-pop .cmp-panel ul{list-style:none;padding:0}
+.p-pop .cmp-panel li{position:relative;background:#fff;color:var(--ink);border-radius:14px;padding:12px 14px 12px 46px}
+.p-pop .cmp-panel li::before{position:absolute;left:12px;top:11px;width:24px;height:24px;border-radius:50%;display:grid;place-items:center;font-size:.8rem;font-weight:900}
+.p-pop .cmp-0 li::before{content:"✗";background:var(--blush)}
+.p-pop .cmp-1 li::before{content:"✓";background:var(--lemon)}
+.p-pop .route>li:not(:last-child)::before{background:var(--sky);width:4px;left:22px;border-radius:2px}
+.p-pop .rt-n{background:var(--lemon);color:var(--ink);font-weight:900}
+.p-pop .rt-chips li{border:0;background:var(--sky-pale)}
+.p-pop .tl-q{border:0;background:var(--sky-pale);border-radius:26px}
+.p-pop .tl-n{display:inline-block;background:var(--lemon);color:var(--ink);padding:2px 12px;border-radius:999px;font-weight:700}
+.p-pop .tl-opt{background:#fff;font-family:var(--head);font-weight:900;font-size:1.1rem}
+.p-pop .tl-opt:not(:disabled):hover{background:var(--lemon)}
+.p-pop .tl-opt.right{background:var(--lemon);box-shadow:inset 0 0 0 2px var(--ink)}
+.p-pop .tl-opt.wrong{background:var(--blush);box-shadow:inset 0 0 0 2px var(--ink);text-decoration:line-through}
+.p-pop .tl-why{background:#fff;border-radius:16px;padding:12px 16px}
+.p-pop .tl-final{background:var(--blush-pale);border-radius:28px}
+.p-pop .tl-score b{display:inline-grid;place-items:center;min-width:52px;height:52px;border-radius:50%;background:var(--lemon)}
+.p-pop .tl-res{font-family:var(--head);font-weight:900;font-size:1.3rem;line-height:1.3}
+.p-pop .freebie{background:var(--sky-pale);border-radius:36px}
+.p-pop .freebie h2{background:#fff}
+.p-pop .fb-tag{background:var(--lemon);color:var(--ink);font-family:var(--head);font-weight:900;font-size:1.05rem;padding:8px 18px;transform:rotate(-2deg)}
+.p-pop .fb-list li{background:#fff;border-radius:14px;padding:11px 14px 11px 46px}
+.p-pop .fb-list li::before{left:12px;top:10px;width:24px;height:24px;border-radius:50%;background:var(--lemon);display:grid;place-items:center;font-size:.8rem;font-weight:900}
+.p-pop .fb-note{display:inline-block;background:var(--blush);padding:6px 14px;border-radius:999px;font-weight:600}
+.p-pop #final .freebie{background:var(--ink);color:#fff}
+.p-pop #final .freebie p,.p-pop #final .freebie .fb-price{color:#fff}
+.p-pop #final .fb-list li{color:var(--ink)}
+.p-pop #final .btn{background:var(--lemon);color:var(--ink)}
+.p-pop #final .btn:hover{background:#fff}
+.p-pop #final .fb-link{color:#fff}
+.p-pop #final .fb-note{color:var(--ink)}
+.p-pop .portrait{border-radius:32px;object-position:50% 8%}
+.p-pop #final .freebie h2,.p-pop #final .freebie p.fb-tag,.p-pop #final .freebie p.fb-note{color:var(--ink)}
+.p-pop .foot h2{background:none}
+/* маршрут с картинками и шаги с картинкой (необязательно) */
+.rt-card{display:grid;grid-template-columns:1fr;gap:16px}
+.rt-card:has(.rt-img){grid-template-columns:120px 1fr;align-items:start}
+.rt-img{width:100%;aspect-ratio:595/842;object-fit:cover;border-radius:12px;box-shadow:0 6px 18px rgba(0,0,0,.12)}
+.steps-media{display:grid;grid-template-columns:5fr 7fr;gap:clamp(20px,4vw,48px);align-items:center;margin-top:24px}
+.steps-media .steps{margin-top:0}
+.steps-img{width:100%;height:auto;border-radius:var(--rimg)}
+@media (max-width:820px){.steps-media{grid-template-columns:1fr}.rt-card:has(.rt-img){grid-template-columns:92px 1fr}}
+/* pop: маршрут карточками, выгоды плиткой */
+.p-pop .route>li{padding-bottom:16px}
+.p-pop .route>li:not(:last-child)::before{top:52px}
+.p-pop .rt-card{background:var(--sky-pale);border-radius:26px;padding:16px}
+.p-pop .rt-img{border:4px solid #fff;transform:rotate(-3deg)}
+.p-pop .route>li:nth-child(even) .rt-img{transform:rotate(3deg)}
+.p-pop .route h3{margin:2px 0 6px}
+.p-pop .rt-card p{margin:0 0 10px;font-size:.95rem}
+.p-pop .rt-chips li{background:#fff;font-weight:600}
+.p-pop .steps-media{background:var(--sky-pale);border-radius:36px;padding:clamp(16px,3vw,36px)}
+.p-pop #metod .steps-media .steps{display:grid;grid-template-columns:1fr 1fr;gap:10px;max-width:none}
+.p-pop #metod .steps-media .steps li{display:block;background:#fff;border-radius:22px;padding:16px}
+.p-pop #metod .steps-media .steps li::before{margin:0 0 10px;width:36px;height:36px;font-size:1rem}
+.p-pop #metod .steps-media .steps h3{font-size:1.05rem;margin:0 0 4px;line-height:1.2}
+.p-pop #metod .steps-media .steps p{font-size:.9rem}
+@media (max-width:520px){.p-pop #metod .steps-media .steps{grid-template-columns:1fr 1fr}.p-pop #metod .steps-media .steps li{padding:14px 12px}}
+.p-pop #metod .steps-media .steps li:last-child:nth-child(odd){grid-column:1/-1}
+@media (max-width:820px){
+  .p-pop .route>li{grid-template-columns:1fr;gap:0}
+  .p-pop .route>li::before{display:none}
+  .p-pop .rt-n{position:absolute;left:-6px;top:-8px;z-index:1;width:38px;height:38px;font-size:1rem;box-shadow:0 0 0 3px #fff}
+  .p-pop .rt-card{grid-template-columns:92px 1fr;grid-template-rows:auto 1fr;column-gap:14px;align-items:start}
+  .p-pop .rt-card>div{display:contents}
+  .p-pop .rt-img{grid-row:span 2}
+  .p-pop .rt-card .rt-chips{grid-column:1/-1;margin-top:12px}
+}
+/* плавное появление (body.anim) */
+.anim .rv{opacity:0;transform:translateY(22px);transition:opacity .6s ease var(--d,0ms),transform .6s cubic-bezier(.2,.7,.2,1) var(--d,0ms)}
+.anim .rv.in{opacity:1;transform:none}
+.anim .hero h1,.anim .hero .lead,.anim .hero .actions,.anim .hero .note,.anim .hero-split img,.anim .hero .kicker{animation:heroin .8s cubic-bezier(.2,.7,.2,1) both}
+.anim .hero .kicker{animation-delay:.05s}.anim .hero h1{animation-delay:.12s}.anim .hero .lead{animation-delay:.22s}
+.anim .hero .actions{animation-delay:.32s}.anim .hero .note{animation-delay:.4s}.anim .hero-split img{animation-delay:.25s}
+@keyframes heroin{from{opacity:0;transform:translateY(18px)}}
+.p-pop.anim .hero-split img{animation-name:heroimg}
+@keyframes heroimg{from{opacity:0;transform:translateY(24px) rotate(6deg)}}
+@media (prefers-reduced-motion:reduce){.anim .rv{opacity:1;transform:none;transition:none}.anim .hero *{animation:none!important}}
+/* галерея-лента с подсказкой (gallery.hint) */
+.g-hint{display:none}
+@media (max-width:820px){
+  .g-hint{display:flex;justify-content:space-between;align-items:center;margin:16px 0 0;font-weight:700}
+  .g-hint::before{content:"";display:none}
+  .g-count{font-weight:600;color:var(--muted)}
+  .g-swipe .gallery{grid-auto-columns:70%}
+  .g-swipe:not(.moved) .g-hint{animation:ghint 1.4s ease-in-out infinite}
+}
+@keyframes ghint{50%{transform:translateX(6px)}}
+.p-pop .g-hint{background:var(--lemon);border-radius:999px;padding:8px 8px 8px 16px;font-family:var(--head);font-weight:900}
+.p-pop .g-count{background:#fff;color:var(--ink);border-radius:999px;padding:4px 12px;font-family:var(--body)}
